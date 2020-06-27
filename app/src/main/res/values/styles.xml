@@ -17,7 +17,5 @@
         <item name="cornerSizeBottomRight">20dp</item>
         <item name="cornerSizeBottomLeft">20dp</item>
         <item name="android:elevation">80dp</item>
-
-
     </style>
 </resources>
