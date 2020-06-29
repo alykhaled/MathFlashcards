@@ -10,8 +10,10 @@
 
     <com.google.android.material.card.MaterialCardView
         style="@style/CustomCardViewStyle"
+        android:id="@+id/cardViewLogin"
         android:layout_width="match_parent"
-        android:layout_height="405dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:cardElevation="35dp">
 
@@ -26,6 +28,7 @@
                 android:text="@string/app_name"
                 android:textAlignment="center"
                 android:textColor="#000"
+                android:fontFamily="@font/cabin_regular"
                 android:textSize="30sp"
                 android:textStyle="bold" />
             <View
@@ -36,20 +39,25 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"/>
             <TextView
+                android:id="@+id/currentStateText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Login"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
                 android:textColor="#000"
-                android:textSize="25sp" />
+                android:textSize="23sp" />
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:hint="Enter Email"
+                android:fontFamily="@font/cabin_regular"
+                android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:background="@drawable/edit_layout"
                 android:textColor="#000"
@@ -61,8 +69,11 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/cabin_regular"
                 android:background="@drawable/edit_layout"
                 android:hint="Enter Password"
+                android:inputType="textPassword"
                 android:padding="10dp"
                 android:textColor="#000"
                 android:textColorHint="#000" />
@@ -78,23 +89,29 @@
         android:text="Login"
         android:textColor="#FFF"
         android:background="@drawable/button_round"
-        android:layout_margin="50dp"/>
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/cabin_regular"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"/>
     <TextView
+        android:id="@+id/accountText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Don't have an account ?"
         android:layout_marginStart="50dp"
+        android:fontFamily="@font/cabin_regular"
         android:textColor="#fff"
-        android:textSize="15sp"
-         />
+        android:textSize="15sp" />
     <Button
+        android:id="@+id/noAccountRegisterBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/cabin_regular"
         android:text="Register"
         android:textColor="#FFF"
         android:background="@drawable/button_round"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginTop="20dp"
-        />
+        android:layout_marginTop="20dp" />
 </LinearLayout>

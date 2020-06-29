@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class NewCardActivity extends AppCompatActivity {
@@ -25,6 +29,8 @@ public class NewCardActivity extends AppCompatActivity {
     private ListAdapter mListAdapter;
     private AnimatorSet frontAnim;
     private AnimatorSet backAnim;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,9 @@ public class NewCardActivity extends AppCompatActivity {
         mQuestionEdit = findViewById(R.id.questionEdit);
         mAnswerEdit = findViewById(R.id.answerEdit);
 
+        com.alykhaled.mathflashcards.FirebaseUtil.openFbReference("cards");
+        mFirebaseDatabase = com.alykhaled.mathflashcards.FirebaseUtil.mFirebaseDatabase;
+        mDatabaseReference = com.alykhaled.mathflashcards.FirebaseUtil.mDatabaseReference;
         mCardsList = new ArrayList<>();
         mDbOpenHelper = new CardsOpenHelper(this);
         mSubBtn.setOnClickListener(new View.OnClickListener() {
@@ -51,10 +60,9 @@ public class NewCardActivity extends AppCompatActivity {
                 db.execSQL("DELETE from " + CardsDatabaseContract.CardsInfo.TABLE_NAME);
             }
         });
-        addCard();
     }
     private void addCard() {
-        String latestId = "0";
+        /*String latestId = "0";
         String title;
         String answer;
         SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
@@ -74,6 +82,8 @@ public class NewCardActivity extends AppCompatActivity {
             values.put(CardsDatabaseContract.CardsInfo.COLUMN_CARD_ANSWER, mAnswerEdit.getText().toString());
             long newRowId = db.insert(CardsDatabaseContract.CardsInfo.TABLE_NAME, null, values);
         }
-        cardsCursor.close();
+        cardsCursor.close();*/
+        CardItem card = new CardItem(mQuestionEdit.getText().toString(),mAnswerEdit.getText().toString());
+        mDatabaseReference.push().setValue(card);
     }
 }

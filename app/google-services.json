@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "622511916017",
+    "firebase_url": "https://math-flashcard-5afff.firebaseio.com",
+    "project_id": "math-flashcard-5afff",
+    "storage_bucket": "math-flashcard-5afff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622511916017:android:a77c5f58ae0338c18ffa50",
+        "android_client_info": {
+          "package_name": "com.alykhaled.mathflashcards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622511916017-vnaln4bpvrnrr3eor4odl31uug3ufqju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alykhaled.mathflashcards",
+            "certificate_hash": "111411c23972216ca4e353bd4f8f9c468d7a2148"
+          }
+        },
+        {
+          "client_id": "622511916017-a39ofhdc7q71psuq51lju34dpm3h948u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6iVQGy8tWV9ptkbKpP_pkRNxMOvN5p6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622511916017-a39ofhdc7q71psuq51lju34dpm3h948u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
