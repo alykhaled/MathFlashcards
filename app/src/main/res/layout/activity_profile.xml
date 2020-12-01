@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProfileActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:elevation="100dp"
+            android:layout_marginTop="110dp"
+            android:src="@drawable/medical" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
+            style="@style/ProfileCardViewStyle"
+            android:layout_width="match_parent"
+            app:cardBackgroundColor="#0069C0"
+            android:layout_height="150dp"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            android:elevation="10dp"
+            app:cardElevation="30dp">
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name: "
+        android:textColor="#000"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/cabin_regular"
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email: "
+        android:textColor="#000"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/cabin_regular"
+        android:textSize="20dp"/>
+    <Button
+        android:id="@+id/noAccountRegisterBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cabin_regular"
+        android:text="Change Password"
+        android:textColor="#FFF"
+        android:background="@drawable/button_round"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="20dp" />
+    <Button
+        android:id="@+id/editProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cabin_regular"
+        android:text="Edit Profile"
+        android:textColor="#FFF"
+        android:background="@drawable/button_round"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="20dp" />
+</LinearLayout>

@@ -16,37 +16,56 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.ViewHolder> {
 
     private final Context mContext;
-    private final ArrayList<ListItem> mLists;
+    private final ArrayList<InterestItem> mLists;
     private LayoutInflater layoutInflater;
     public OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-        void onItemClick (int position, ArrayList<ListItem> t);
+        void onItemClick(int position, ArrayList<InterestItem> t);
     }
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
-    public ListAdapter(Context mContext, ArrayList<ListItem> mLists) {
+    public InterestsAdapter(Context mContext, ArrayList<InterestItem> mLists) {
         this.mContext = mContext;
         this.mLists = mLists;
     }
 
     @NonNull
     @Override
-    public ListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InterestsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.list_layout, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, int position) {
-        ListItem list = mLists.get(position);
-        holder.mListName.setText(list.getList_name());
-        Picasso.get().load(list.getList_pic()).fit().into(holder.mListImage);
-
+    public void onBindViewHolder(@NonNull final InterestsAdapter.ViewHolder holder, final int position) {
+        final InterestItem list = mLists.get(position);
+        holder.mListName.setText(list.getInterest_name());
+        Picasso.get().load(list.getInterest_pic()).fit().into(holder.mListImage);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    if (position != RecyclerView.NO_POSITION) {
+                        mListener.onItemClick(position,mLists);
+                    }
+                }
+                if (list.isSelected())
+                {
+                    holder.mListName.setBackgroundColor(0xFF00FF00);
+                    list.setSelected(false);
+                }
+                else
+                {
+                    holder.mListName.setBackgroundColor(0xFF00FFFF);
+                    list.setSelected(true);
+                }
+            }
+        });
     }
 
     @Override
@@ -63,17 +82,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             super(itemView);
             mListName = itemView.findViewById(R.id.listText);
             mListImage = itemView.findViewById(R.id.list_back);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position,mLists);
-                        }
-                    }
-                }
-            });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {

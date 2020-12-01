@@ -19,38 +19,53 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements ListAdapter.OnItemClickListener {
     private CardsOpenHelper mDbOpenHelper;
-    private ArrayList<CardItem> mCardsList;
+    private ArrayList<ListItem> mListsList;
     private RecyclerView mCardsView;
     private ListAdapter mListAdapter;
     private AnimatorSet frontAnim;
     private AnimatorSet backAnim;
     private TextView mAddBtn;
+    private TextView mWelcomeText;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildListener;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decorView = getWindow().getDecorView();
+
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        View decorView = getWindow().getDecorView();
+
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
 
         LinearLayoutManager LinerManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         mCardsView = findViewById(R.id.trackView);
-
-        Window window = MainActivity.this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorAccent));
+        mWelcomeText = findViewById(R.id.welcomeText);
 
         mCardsView.setHasFixedSize(true);
         mCardsView.setLayoutManager(LinerManager);
@@ -62,19 +77,21 @@ public class MainActivity extends AppCompatActivity implements ListAdapter.OnIte
                 startActivity(intent);
             }
         });
-        mCardsList = new ArrayList<>();
+        mListsList = new ArrayList<>();
         mDbOpenHelper = new CardsOpenHelper(this);
-        com.alykhaled.mathflashcards.FirebaseUtil.openFbReference("cards");
+        com.alykhaled.mathflashcards.FirebaseUtil.openFbReference("lists");
         mFirebaseDatabase = com.alykhaled.mathflashcards.FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = com.alykhaled.mathflashcards.FirebaseUtil.mDatabaseReference;
         mChildListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                CardItem card = snapshot.getValue(CardItem.class);
-                mCardsList.add(card);
-                mListAdapter = new ListAdapter(MainActivity.this,mCardsList);
+                ListItem card = snapshot.getValue(ListItem.class);
+                mListsList.add(card);
+                Collections.reverse(mListsList);
+                mListAdapter = new ListAdapter(MainActivity.this,mListsList);
                 mCardsView.setAdapter(mListAdapter);
-                mListAdapter.notifyItemInserted(mCardsList.size()-1);
+                mListAdapter.setOnItemClickListener(MainActivity.this);
+                mListAdapter.notifyItemInserted(mListsList.size()-1);
             }
 
             @Override
@@ -98,49 +115,46 @@ public class MainActivity extends AppCompatActivity implements ListAdapter.OnIte
             }
         };
         mDatabaseReference.addChildEventListener(mChildListener);
-        addCard();
+        getUserDetails();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        addCard();
+    public void getUserDetails() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        Query query = ref.child("users")
+                .orderByKey()
+                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot singleSnapShot : snapshot.getChildren())
+                {
+                    user user = singleSnapShot.getValue(com.alykhaled.mathflashcards.user.class);
+                    mWelcomeText.setText("Welcome, " + user.getName());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
-    private void addCard() {
-        /*String latestId ;
-        String title;
-        String answer;
-        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
-        String[] cardColumns = {CardsDatabaseContract.CardsInfo.COLUMN_CARD_ID, CardsDatabaseContract.CardsInfo.COLUMN_CARD_TITLE, CardsDatabaseContract.CardsInfo.COLUMN_CARD_ANSWER};
-        final Cursor cardsCursor = db.query(CardsDatabaseContract.CardsInfo.TABLE_NAME, cardColumns, null, null, null, null, null);
-        mCardsList = new ArrayList<>();
-
-        while(cardsCursor.moveToNext())
-        {
-            latestId = cardsCursor.getString(0);
-            title = cardsCursor.getString(1);
-            answer = cardsCursor.getString(2);
-            mCardsList.add(new CardItem(title,answer));
-        }
-        Collections.reverse(mCardsList);
-        mListAdapter = new ListAdapter(MainActivity.this,mCardsList);
-        mCardsView.setAdapter(mListAdapter);
-        mListAdapter.setOnItemClickListener(MainActivity.this);
-        cardsCursor.close();*/
-
-    }
     @Override
     protected void onDestroy() {
         mDbOpenHelper.close();
         super.onDestroy();
     }
 
-    public void onItemClick(int position,ArrayList<CardItem> t ) {
-        CardItem clickedItem = t.get(position);
-        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
-        db.execSQL("DELETE FROM " + CardsDatabaseContract.CardsInfo.TABLE_NAME + " WHERE card_id = " + clickedItem.getmCardId());
-        addCard();
+    public void onItemClick(int position,ArrayList<ListItem> t ) {
+        ListItem list = t.get(position);
+        /*SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+        db.execSQL("DELETE FROM " + CardsDatabaseContract.CardsInfo.TABLE_NAME + " WHERE card_id = " + clickedItem.getmCardId());*/
+        Intent intent = new Intent(MainActivity.this,ViewCardActivity.class);
+        intent.putExtra("list", list);
+        startActivity(intent);
 
     }
 }

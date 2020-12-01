@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#0069C0"
+    android:background="#fff"
     tools:context=".LoginActivity">
 
     <com.google.android.material.card.MaterialCardView
@@ -13,9 +13,11 @@
         android:id="@+id/cardViewLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="#0069C0"
         android:paddingBottom="20dp"
         android:theme="@style/Theme.MaterialComponents.Light"
-        app:cardElevation="35dp">
+        app:cardElevation="0dp"
+        android:elevation="25dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,14 +29,14 @@
                 android:layout_marginTop="100dp"
                 android:text="@string/app_name"
                 android:textAlignment="center"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:fontFamily="@font/cabin_regular"
                 android:textSize="30sp"
                 android:textStyle="bold" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#000"
+                android:background="#fff"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"/>
@@ -46,10 +48,11 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/cabin_regular"
                 android:textAlignment="center"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:textSize="23sp" />
 
             <EditText
+                android:id="@+id/loginEmailEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -64,6 +67,7 @@
                 android:textColorHint="#000" />
 
             <EditText
+                android:id="@+id/loginPasswordEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -84,6 +88,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <Button
+        android:id="@+id/loginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
@@ -101,7 +106,7 @@
         android:text="Don't have an account ?"
         android:layout_marginStart="50dp"
         android:fontFamily="@font/cabin_regular"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="15sp" />
     <Button
         android:id="@+id/noAccountRegisterBtn"

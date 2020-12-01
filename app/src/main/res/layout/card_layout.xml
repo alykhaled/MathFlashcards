@@ -7,32 +7,60 @@
     android:layout_height="150dp"
     app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true"
-    app:cardElevation="5dp">
+    app:cardElevation="8dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/questionTxt"
+        <ViewFlipper
+            android:id="@+id/cardViewFlipper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Test"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/answerTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="center"
+                    android:layout_centerVertical="false"
+                    android:text="Test"
+                    android:textSize="20dp"
+                    android:textAlignment="center" />
+                <ImageView
+                    android:id="@+id/mathImage"
+                    android:layout_below="@+id/answerTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/questionTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Test"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/quesImage"
+                    android:layout_below="@+id/questionTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/answerTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="8dp"
-            android:text="Test"
-            android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@+id/questionTxt"
-            tools:layout_editor_absoluteX="0dp" />
+
+        </ViewFlipper>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
